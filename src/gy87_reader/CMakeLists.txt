@@ -20,6 +20,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(serial REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(custom_interface REQUIRED)
 
 add_executable(gy87_reader_node src/gy87_reader_node.cpp)
 target_include_directories(gy87_reader_node PUBLIC
@@ -27,9 +28,9 @@ target_include_directories(gy87_reader_node PUBLIC
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   gy87_reader_node
-  # "serial"
-  "rclcpp"
-  "std_msgs"
+  rclcpp
+  std_msgs
+  custom_interface
 )
 
 install(TARGETS gy87_reader_node

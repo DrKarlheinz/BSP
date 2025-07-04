@@ -1,0 +1,22 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from custom_interface/msg/Gy87.msg
+// generated code does not contain a copyright notice
+
+
+module custom_interface {
+  module msg {
+    struct Gy87 {
+      float ax;
+
+      float ay;
+
+      float az;
+
+      float gx;
+
+      float gy;
+
+      float gz;
+    };
+  };
+};
