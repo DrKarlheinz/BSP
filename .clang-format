@@ -1,0 +1,24 @@
+BasedOnStyle: llvm
+IndentWidth: 4
+UseTab: Never
+SpaceBeforeAssignmentOperators: true
+SpacesInParentheses: false
+SpaceBeforeParens: ControlStatements
+
+# AlignConsecutiveAssignments: Consecutive
+  # Enabled: true
+  # AcrossEmptyLines: false
+  # AcrossComments: false
+  # AlignCompound: true
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: true
+  AfterEnum: true
+  AfterStruct: true
+  AfterClass: true
+  AfterNamespace: true
+  BeforeElse: true
+
+
