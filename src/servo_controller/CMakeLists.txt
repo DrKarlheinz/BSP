@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(glider)
+project(servo_controller)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,16 +17,22 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(custom_interface REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
-add_executable(servo src/servo.cpp)
-target_include_directories(servo PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+add_executable(servo_control_node src/servo_control_node.cpp)
+# target_include_directories(servo_control_node PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  servo_control_node
+  custom_interface
+  rclcpp
+  std_msgs
+)
 
-install(TARGETS servo
+install(TARGETS servo_control_node
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

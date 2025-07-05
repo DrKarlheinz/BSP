@@ -1,24 +1,22 @@
-BasedOnStyle: llvm
+
+TabWidth: 4
 IndentWidth: 4
 UseTab: Never
-SpaceBeforeAssignmentOperators: true
-SpacesInParentheses: false
-SpaceBeforeParens: ControlStatements
-
-# AlignConsecutiveAssignments: Consecutive
-  # Enabled: true
-  # AcrossEmptyLines: false
-  # AcrossComments: false
-  # AlignCompound: true
-
-BreakBeforeBraces: Custom
-BraceWrapping:
-  AfterFunction: true
-  AfterControlStatement: true
-  AfterEnum: true
-  AfterStruct: true
-  AfterClass: true
-  AfterNamespace: true
-  BeforeElse: true
 
 
+Language: Cpp
+Standard: Cpp11
+
+
+AccessModifierOffset: 0
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: true
+AlignTrailingComments: true
+
+BreakBeforeBraces: Allman
+ConstructorInitializerIndentWidth: 4
+
+# IndentAccessModifiers: true
+
+# IndentCaseLabels: true
+# IndentAccessModifiers: true
