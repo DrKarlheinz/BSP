@@ -1,4 +1,1 @@
-# Request
-int64 a
-int64 b
-int64 c
+/home/theo/glider_ws/build/custom_interface/rosidl_cmake/srv/AddThreeInts_Request.msg

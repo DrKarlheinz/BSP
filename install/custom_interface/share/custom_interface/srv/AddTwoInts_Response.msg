@@ -1,2 +1,1 @@
-
-int64 sum
+/home/theo/glider_ws/build/custom_interface/rosidl_cmake/srv/AddTwoInts_Response.msg

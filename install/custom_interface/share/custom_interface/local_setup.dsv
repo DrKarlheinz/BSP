@@ -1,4 +1,1 @@
-source;share/custom_interface/environment/ament_prefix_path.sh
-source;share/custom_interface/environment/library_path.sh
-source;share/custom_interface/environment/path.sh
-source;share/custom_interface/environment/pythonpath.sh
+/home/theo/glider_ws/build/custom_interface/ament_cmake_environment_hooks/local_setup.dsv
