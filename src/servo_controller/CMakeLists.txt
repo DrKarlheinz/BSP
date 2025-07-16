@@ -31,6 +31,7 @@ ament_target_dependencies(
   rclcpp
   std_msgs
 )
+target_link_libraries(servo_control_node pigpiod_if2)
 
 install(TARGETS servo_control_node
   DESTINATION lib/${PROJECT_NAME})
