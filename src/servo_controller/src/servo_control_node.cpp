@@ -43,25 +43,11 @@ class ServoControllerNode : public rclcpp::Node
     void
     topic_callback(const custom_interface::msg::Servo::SharedPtr data) const
     {
-        int flight_stage = this->get_parameter("flap_stage").as_int();
 
         // RCLCPP_INFO(this->get_logger(), "first data '%f' flight stage '%d'",
         //             data->ax, flight_stage);
 
         int pwm_us = 1450; // Default (center)
-
-        if (flight_stage == 0)
-        {
-            pwm_us = 1450; // Neutral
-        }
-        else if (flight_stage == 1)
-        {
-            pwm_us = 2400; // Glide
-        }
-        else if (flight_stage == 2)
-        {
-            pwm_us = 500; // Land
-        }
 
         set_servo_pulsewidth(pi_, servo_pin_, pwm_us);
         RCLCPP_INFO(this->get_logger(), "PWM set to %d us", pwm_us);
