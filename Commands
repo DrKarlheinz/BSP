@@ -1,0 +1,74 @@
+
+
+make px4_sitl gazebo-classic
+
+------------------------------------------
+
+Start the agent with settings for connecting to the uXRCE-DDS client running on the simulator:
+
+MicroXRCEAgent udp4 -p 8888
+
+------------------------------------------
+
+Create workspace
+
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
+
+------------------------------------------
+
+colcon build --packages-select drone_controller
+rm -rf install/publisher build/publisher
+colcon build --packages-select publisher
+source /opt/ros/foxy/setup.bash
+source install/local_setup.bash
+ros2 run publisher publisher
+
+colcon build --packages-select drone_controller
+source /opt/ros/foxy/setup.bash
+source ~/foxy_ws/install/local_setup.bash
+ros2 run drone_controller drone_control_node
+
+source ~/foxy_ws/install/local_setup.bash
+------------------------------------------
+
+Custom Package
+
+
+--> create custom package with node IN SRC !!!!
+ros2 pkg create --build-type ament_cmake --node-name my_node my_package
+ros2 pkg create --build-type ament_python --node-name publisher publisher
+
+--> ALWAYS INCLUDE and clone in /src 
+git clone https://github.com/PX4/px4_msgs.git
+--> Is needed in this case but not mandatory
+git clone https://github.com/PX4/px4_ros_com.git
+
+
+
+
+resolve dependencies --> new packages don't fail | run in root folder of the package
+rosdep install -i --from-path src --rosdistro foxy -y
+
+-----------------------------------------------
+
+ssh pi@192.168.30.37
+MicroXRCEAgent serial --dev /dev/ttyUSB0 -b 921600
+ros2 launch vrpn_mocap client.launch.yaml server:=192.168.30.105 port:=3883
+ros2 launch vrpn_mocap_px4 launch.yaml source:=/vrpn_mocap/hummingbird/pose sink:=/fmu/in/vehicle_visual_odometry
+
+-----------------------------------------------
+
+Cloning Process
+
+git clone https://github.com/PX4/PX4-Autopilot.git --recursive
+
+git checkout PR_test_branch
+
+make submodulesclean
+
+
+
+
+
+
