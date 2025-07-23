@@ -27,6 +27,12 @@ target_include_directories(servo_publisher_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+  ament_target_dependencies(
+    servo_publisher_node
+    rclcpp
+    custom_interface
+  )
+
 install(TARGETS servo_publisher_node
   DESTINATION lib/${PROJECT_NAME})
 
