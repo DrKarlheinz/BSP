@@ -20,13 +20,12 @@ find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 find_package(custom_interface REQUIRED)
-
+find_package(rclcpp REQUIRED)
 
 add_executable(servo_publisher_node src/servo_publisher_node.cpp)
 target_include_directories(servo_publisher_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-
   ament_target_dependencies(
     servo_publisher_node
     rclcpp
