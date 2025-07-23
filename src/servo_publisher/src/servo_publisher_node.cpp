@@ -1,10 +1,66 @@
-#include <cstdio>
+// Copyright 2016 Open Source Robotics Foundation, Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
-int main(int argc, char ** argv)
+#include <chrono>
+#include <functional>
+#include <memory>
+
+#include "custom_interface/msg/servo.hpp"
+#include "rclcpp/rclcpp.hpp"
+
+using namespace std::chrono_literals;
+
+/* This example creates a subclass of Node and uses std::bind() to register a
+ * member function as a callback from the timer. */
+
+class ServoPublsiher : public rclcpp::Node
 {
-  (void) argc;
-  (void) argv;
+    public:
+    ServoPublsiher() : Node("servo_publisher"), count_(0)
+    {
+        publisher_ = this->create_publisher<custom_interface::msg::Servo>(
+            "servo_publisher", 10);
+        timer_ = this->create_wall_timer(
+            1000ms, std::bind(&ServoPublsiher::read_serial, this));
+    }
 
-  printf("hello world servo_publisher package\n");
-  return 0;
+    private:
+    void read_serial()
+    {
+        // get values from gy87 sensor
+
+        auto data           = custom_interface::msg::Servo();
+        data.servoleft      = 180.0;
+        data.servoright     = 180.0;
+        data.servobackleft  = 180.0;
+        data.servobackright = 180.0;
+        RCLCPP_INFO(
+            this->get_logger(),
+            "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
+            data.servoleft, data.servoright, data.servobackleft,
+            data.servobackright);
+        publisher_->publish(data);
+    }
+    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Publisher<custom_interface::msg::Servo>::SharedPtr publisher_;
+    size_t count_;
+};
+
+int main(int argc, char *argv[])
+{
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<ServoPublsiher>());
+    rclcpp::shutdown();
+    return 0;
 }

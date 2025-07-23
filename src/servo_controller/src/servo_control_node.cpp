@@ -14,7 +14,7 @@ class ServoControllerNode : public rclcpp::Node
     {
 
         subscription_ = this->create_subscription<custom_interface::msg::Servo>(
-            "Servo_writer", 10,
+            "servo_publisher", 10,
             std::bind(&ServoControllerNode::topic_callback, this, _1));
 
         pi_ = pigpio_start(nullptr, nullptr); // Connect to local pigpiod
@@ -44,8 +44,7 @@ class ServoControllerNode : public rclcpp::Node
     topic_callback(const custom_interface::msg::Servo::SharedPtr data) const
     {
 
-        // RCLCPP_INFO(this->get_logger(), "first data '%f' flight stage '%d'",
-        //             data->ax, flight_stage);
+        RCLCPP_INFO(this->get_logger(), "first data '%f' ", data->servoright);
 
         int pwm_us = 1450; // Default (center)
 
