@@ -46,7 +46,7 @@ class ServoControllerNode : public rclcpp::Node
 
         RCLCPP_INFO(this->get_logger(), "first data '%f' ", data->servoright);
 
-        // int pwm_us = 1450; // Default (center)
+        int pwm_us = 1450; // Default (center)
 
         // set_servo_pulsewidth(pi_, servo_pin_, pwm_us);
         RCLCPP_INFO(this->get_logger(), "PWM set to %d us", pwm_us);
