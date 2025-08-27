@@ -1,18 +1,1 @@
-// generated from rosidl_adapter/resource/msg.idl.em
-// with input from custom_interface/msg/Servo.msg
-// generated code does not contain a copyright notice
-
-
-module custom_interface {
-  module msg {
-    struct Servo {
-      float servoleft;
-
-      float servoright;
-
-      float servobackleft;
-
-      float servobackright;
-    };
-  };
-};
+/home/theo/glider_ws/build/custom_interface/rosidl_adapter/custom_interface/msg/Servo.idl

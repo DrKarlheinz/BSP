@@ -3,7 +3,7 @@
 #include "std_msgs/msg/string.hpp"
 #include <iostream>
 #include <memory>
-// #include <pigpiod_if2.h>
+#include <pigpiod_if2.h>
 #include <unistd.h>
 using std::placeholders::_1;
 
@@ -17,26 +17,26 @@ class ServoControllerNode : public rclcpp::Node
             "servo_publisher", 10,
             std::bind(&ServoControllerNode::topic_callback, this, _1));
 
-        // pi_ = pigpio_start(nullptr, nullptr); // Connect to local pigpiod
-        // if (pi_ < 0)
-        // {
-        //     RCLCPP_FATAL(this->get_logger(), "Failed to connect to pigpiod");
-        //     rclcpp::shutdown();
-        //     return;
-        // }
+         pi_ = pigpio_start(nullptr, nullptr); // Connect to local pigpiod
+         if (pi_ < 0)
+         {
+             // RCLCPP_FATAL(this->get_logger(), "Failed to connect to pigpiod");
+             rclcpp::shutdown();
+             return;
+         }
 
-        // servo_pin_ = 17;
-        // set_mode(pi_, servo_pin_, PI_OUTPUT);
-        // set_PWM_frequency(pi_, servo_pin_, 50); // 50Hz
+         servo_pin_ = 17;
+         set_mode(pi_, servo_pin_, PI_OUTPUT);
+         set_PWM_frequency(pi_, servo_pin_, 50); // 50Hz
 
-        RCLCPP_INFO(this->get_logger(), "Servo node initialized.");
+       //  RCLCPP_INFO(this->get_logger(), "Servo node initialized.");
     }
 
     ~ServoControllerNode()
     {
-        // set_servo_pulsewidth(pi_, servo_pin_, 0); // Stop PWM
-        RCLCPP_INFO(this->get_logger(), "Serv gt shut down why??");
-        // pigpio_stop(pi_); // Disconnect from pigpiod
+         set_servo_pulsewidth(pi_, servo_pin_, 0); // Stop PWM
+         RCLCPP_INFO(this->get_logger(), "Serv gt shut down why??");
+         pigpio_stop(pi_);  // Disconnect from pigpiod
     }
 
     private:
@@ -44,12 +44,12 @@ class ServoControllerNode : public rclcpp::Node
     topic_callback(const custom_interface::msg::Servo::SharedPtr data) const
     {
 
-        RCLCPP_INFO(this->get_logger(), "first data '%f' ", data->servoright);
+       // RCLCPP_INFO(this->get_logger(), "first data '%f' ", data->servoright);
 
-        // int pwm_us = 1450; // Default (center)
+         int pwm_us = data->servoright;  // Default (center)
 
-        // set_servo_pulsewidth(pi_, servo_pin_, pwm_us);
-        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", pwm_us);
+         set_servo_pulsewidth(pi_, servo_pin_, pwm_us);
+       RCLCPP_INFO(this->get_logger(), "PWM set to %d us", pwm_us);
     }
     rclcpp::Subscription<custom_interface::msg::Servo>::SharedPtr subscription_;
     int servo_pin_;

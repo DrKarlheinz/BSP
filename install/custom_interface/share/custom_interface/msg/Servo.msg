@@ -1,4 +1,1 @@
-float32 servoleft
-float32 servoright
-float32 servobackleft
-float32 servobackright
+/home/theo/glider_ws/src/custom_interface/msg/Servo.msg
