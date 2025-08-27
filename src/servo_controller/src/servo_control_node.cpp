@@ -20,7 +20,7 @@ class ServoControllerNode : public rclcpp::Node
          pi_ = pigpio_start(nullptr, nullptr); // Connect to local pigpiod
          if (pi_ < 0)
          {
-             // RCLCPP_FATAL(this->get_logger(), "Failed to connect to pigpiod");
+             RCLCPP_FATAL(this->get_logger(), "Failed to connect to pigpiod");
              rclcpp::shutdown();
              return;
          }
