@@ -9,6 +9,11 @@ using std::placeholders::_1;
 
 class ServoControllerNode : public rclcpp::Node
 {
+
+    rclcpp::Subscription<custom_interface::msg::Servo>::SharedPtr subscription_;
+    int servo_pin_;
+    int pi_;
+
     public:
     ServoControllerNode() : Node("servo_control_node")
     {
@@ -29,7 +34,7 @@ class ServoControllerNode : public rclcpp::Node
          set_mode(pi_, servo_pin_, PI_OUTPUT);
          set_PWM_frequency(pi_, servo_pin_, 50); // 50Hz
 
-       //  RCLCPP_INFO(this->get_logger(), "Servo node initialized.");
+         RCLCPP_INFO(this->get_logger(), "Servo node initialized.");
     }
 
     ~ServoControllerNode()
@@ -45,15 +50,12 @@ class ServoControllerNode : public rclcpp::Node
     {
 
        // RCLCPP_INFO(this->get_logger(), "first data '%f' ", data->servoright);
-
-         int pwm_us = data->servoright;  // Default (center)
+	 int pwm_us = 1000;
+          pwm_us = data->servoright;  // Default (center)
 
          set_servo_pulsewidth(pi_, servo_pin_, pwm_us);
        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", pwm_us);
     }
-    rclcpp::Subscription<custom_interface::msg::Servo>::SharedPtr subscription_;
-    int servo_pin_;
-    int pi_;
 };
 
 int main(int argc, char *argv[])

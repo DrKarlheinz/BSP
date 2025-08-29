@@ -32,7 +32,7 @@ class ServoPublsiher : public rclcpp::Node
         publisher_ = this->create_publisher<custom_interface::msg::Servo>(
             "servo_publisher", 10);
         timer_ = this->create_wall_timer(
-            1000ms, std::bind(&ServoPublsiher::read_serial, this));
+            250ms, std::bind(&ServoPublsiher::read_serial, this));
     }
 
     private:
@@ -42,7 +42,11 @@ class ServoPublsiher : public rclcpp::Node
 
         auto data           = custom_interface::msg::Servo();
         data.servoleft      = 180.0;
-        data.servoright     = 180.0;
+
+	if (count_ == 10) direction_ = -1;
+	if (count_ == 0)  direction_ = 1;
+	count_ += direction_;
+        data.servoright     = 1000.0 + (count_ * 100.0) ;
         data.servobackleft  = 180.0;
         data.servobackright = 180.0;
         RCLCPP_INFO(
@@ -54,7 +58,8 @@ class ServoPublsiher : public rclcpp::Node
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<custom_interface::msg::Servo>::SharedPtr publisher_;
-    size_t count_;
+    size_t count_ = 0;
+    int direction_ = 1;
 };
 
 int main(int argc, char *argv[])
