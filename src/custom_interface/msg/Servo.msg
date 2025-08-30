@@ -1,4 +1,4 @@
-float32 servoleft
-float32 servoright
-float32 servobackleft
-float32 servobackright
+float32 aileron_left
+float32 aileron_right
+float32 elevator
+float32 rudder
