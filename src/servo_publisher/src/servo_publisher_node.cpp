@@ -41,10 +41,10 @@ class ServoPublsiher : public rclcpp::Node
         // get values from gy87 sensor
 
         auto data           = custom_interface::msg::Servo();
-        data.servoleft      = 180.0;
-        data.servoright     = 180.0;
-        data.servobackleft  = 180.0;
-        data.servobackright = 180.0;
+        data.aileron_left   = 1000.0;
+        data.aileron_right  = 1000.0;
+        data.elevator       = 1000.0;
+        data.rudder          = 1000.0;
         RCLCPP_INFO(
             this->get_logger(),
             "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
