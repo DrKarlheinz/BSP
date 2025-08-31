@@ -1,1 +1,0 @@
-/home/theo/glider_ws/src/custom_interface/msg/Sphere.msg

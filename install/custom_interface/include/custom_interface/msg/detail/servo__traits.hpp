@@ -1,1 +1,0 @@
-/home/theo/glider_ws/build/custom_interface/rosidl_generator_cpp/custom_interface/msg/detail/servo__traits.hpp

@@ -1,1 +1,0 @@
-/home/theo/glider_ws/build/custom_interface/rosidl_typesupport_introspection_c/custom_interface/msg/detail/servo__rosidl_typesupport_introspection_c.h
