@@ -21,6 +21,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/detail/string__struct.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "mpu6050.h"
 
 using namespace std::chrono_literals;
 
@@ -43,7 +44,7 @@ class Gy87Reader : public rclcpp::Node
         if (!mpu.whoAmI())
         {
             printf("\nERROR: Cannot find the MPU6050 sensor!\n");
-            return -1;
+            rclcpp::shutdown();
         }
 
         mpu.initialize();
