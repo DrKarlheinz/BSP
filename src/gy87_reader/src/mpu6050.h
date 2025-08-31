@@ -6,7 +6,7 @@
  * https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
  *
  */
-
+// I, Theo Liebschwager, did not create this file
 #include <cstdint>
 
 #define MPU6050_ADDR 0x68

@@ -6,7 +6,7 @@
  * https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Register-Map1.pdf
  *
  */
-
+// I, Theo Liebschwager, did not create this file but modified it
 #include <cstdint>
 #include <fcntl.h>         //Needed for I2C port
 #include <linux/i2c-dev.h> //Needed for I2C port
