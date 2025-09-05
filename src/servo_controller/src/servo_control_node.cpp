@@ -31,6 +31,10 @@ class ServoControllerNode : public rclcpp::Node
         }
 
         servo_pin_ = 17;
+        aileron_left_  = ;
+        aileron_right_ = ;
+        elevator_      = ;
+        rudder_        = ;
         set_mode(pi_, servo_pin_, PI_OUTPUT);
         set_PWM_frequency(pi_, servo_pin_, 50); // 50Hz
 

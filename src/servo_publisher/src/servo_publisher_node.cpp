@@ -40,17 +40,18 @@ class ServoPulisher : public rclcpp::Node
     {
         // get values from gy87 sensor
 
-        auto data         = custom_interface::msg::Servo();
-        data.aileron_left = 1000.0;
+        auto data          = custom_interface::msg::Servo();
 
         if (count_ == 10)
             direction_ = -1;
         if (count_ == 0)
             direction_ = 1;
         count_ += direction_;
-        data.aileron_right = 1000.0 + (count_ * 100.0);
-        data.elevator      = 1000.0;
-        data.rudder        = 1000.0;
+
+        aileron_left  = 1000.0;
+        aileron_right = 1000.0;
+        elevator      = 1000.0;
+        rudder        = 1000.0;
         RCLCPP_INFO(
             this->get_logger(),
             "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
