@@ -21,6 +21,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/detail/string__struct.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "mpu6050.h"
 
 using namespace std::chrono_literals;
 
@@ -29,27 +30,44 @@ using namespace std::chrono_literals;
 
 class Gy87Reader : public rclcpp::Node
 {
-  public:
+    public:
     Gy87Reader() : Node("gy87_reader"), count_(0)
     {
         publisher_ = this->create_publisher<custom_interface::msg::Gy87>(
             "gy87_reader", 10);
         timer_ = this->create_wall_timer(
             1000ms, std::bind(&Gy87Reader::read_serial, this));
+
+        mpu.setDebug(false);
+        fflush(stdout);
+
+        if (!mpu.whoAmI())
+        {
+            printf("\nERROR: Cannot find the MPU6050 sensor!\n");
+            rclcpp::shutdown();
+        }
+
+        mpu.initialize();
     }
 
-  private:
+    private:
     void read_serial()
     {
+        int16_t ax, ay, az;
+        int16_t gx, gy, gz;
+
         // get values from gy87 sensor
+        mpu.getAcceleration(&ax, &ay, &az);
+        mpu.getRotation(&gx, &gy, &gz);
 
         auto message = custom_interface::msg::Gy87();
-        message.ax = 120.5;
-        message.ay = 130.2;
-        message.az = 140.3;
-        message.gx = 0.5;
-        message.gy = 1.2;
-        message.gz = 2.3;
+        message.ax   = (float)ax / 16384.0;
+        message.ay   = (float)ay / 16384.0;
+        message.az   = (float)az / 16384.0;
+
+        message.gx = (float)gx / 131.0;
+        message.gy = (float)gy / 131.0;
+        message.gz = (float)gz / 131.0;
         RCLCPP_INFO(this->get_logger(),
                     "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n "
                     "gy '%f' \n gz '%f'",
@@ -60,6 +78,7 @@ class Gy87Reader : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<custom_interface::msg::Gy87>::SharedPtr publisher_;
     size_t count_;
+    MPU6050 mpu;
 };
 
 int main(int argc, char *argv[])

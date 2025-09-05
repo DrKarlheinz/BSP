@@ -22,15 +22,12 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 
-find_package(geometry_msgs REQUIRED)
+
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/Num.msg"
   "msg/Gy87.msg"
   "msg/Servo.msg"
-  "srv/AddThreeInts.srv"
-  "srv/AddTwoInts.srv"
 )
 
 

@@ -24,15 +24,15 @@ using namespace std::chrono_literals;
 /* This example creates a subclass of Node and uses std::bind() to register a
  * member function as a callback from the timer. */
 
-class ServoPublsiher : public rclcpp::Node
+class ServoPulisher : public rclcpp::Node
 {
     public:
-    ServoPublsiher() : Node("servo_publisher"), count_(0)
+    ServoPulisher() : Node("servo_publisher"), count_(0)
     {
         publisher_ = this->create_publisher<custom_interface::msg::Servo>(
             "servo_publisher", 10);
         timer_ = this->create_wall_timer(
-            250ms, std::bind(&ServoPublsiher::read_serial, this));
+            250ms, std::bind(&ServoPulisher::read_serial, this));
     }
 
     private:
@@ -40,39 +40,33 @@ class ServoPublsiher : public rclcpp::Node
     {
         // get values from gy87 sensor
 
-        auto data           = custom_interface::msg::Servo();
-<<<<<<< HEAD
-        data.servoleft      = 180.0;
+        auto data         = custom_interface::msg::Servo();
+        data.aileron_left = 1000.0;
 
-	if (count_ == 10) direction_ = -1;
-	if (count_ == 0)  direction_ = 1;
-	count_ += direction_;
-        data.servoright     = 1000.0 + (count_ * 100.0) ;
-        data.servobackleft  = 180.0;
-        data.servobackright = 180.0;
-=======
-        data.aileron_left   = 1000.0;
-        data.aileron_right  = 1000.0;
-        data.elevator       = 1000.0;
-        data.rudder          = 1000.0;
->>>>>>> ee8e70a9d31807e42067bafaeb262774aeceab4f
+        if (count_ == 10)
+            direction_ = -1;
+        if (count_ == 0)
+            direction_ = 1;
+        count_ += direction_;
+        data.aileron_right = 1000.0 + (count_ * 100.0);
+        data.elevator      = 1000.0;
+        data.rudder        = 1000.0;
         RCLCPP_INFO(
             this->get_logger(),
             "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
-            data.servoleft, data.servoright, data.servobackleft,
-            data.servobackright);
+            data.aileron_left, data.aileron_right, data.elevator, data.rudder);
         publisher_->publish(data);
     }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<custom_interface::msg::Servo>::SharedPtr publisher_;
-    size_t count_ = 0;
+    size_t count_  = 0;
     int direction_ = 1;
 };
 
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<ServoPublsiher>());
+    rclcpp::spin(std::make_shared<ServoPulisher>());
     rclcpp::shutdown();
     return 0;
 }

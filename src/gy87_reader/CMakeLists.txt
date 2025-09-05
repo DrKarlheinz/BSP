@@ -22,9 +22,10 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(custom_interface REQUIRED)
 
-add_executable(gy87_reader_node src/gy87_reader_node.cpp)
+add_executable(gy87_reader_node src/gy87_reader_node.cpp src/mpu6050.cpp)
 target_include_directories(gy87_reader_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   gy87_reader_node
