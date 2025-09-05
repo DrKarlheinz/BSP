@@ -51,7 +51,7 @@ class ServoPulisher : public rclcpp::Node
         aileron_left  = 1000.0;
         aileron_right = 1000.0;
         elevator      = 1000.0;
-        rudder        = 1000.0;
+        rudder        = 1002.0;
         RCLCPP_INFO(
             this->get_logger(),
             "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
