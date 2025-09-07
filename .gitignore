@@ -1,7 +1,8 @@
 build/
 log/
-.vscode/
 install/
+accessories/
+.vscode/
 reqs.txt
 accessories/sysfspwm/
 vrpn_mocap_px4/
