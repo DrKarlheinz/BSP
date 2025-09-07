@@ -4,3 +4,7 @@ log/
 install/
 reqs.txt
 accessories/sysfspwm/
+vrpn_mocap_px4/
+accessories/
+Final\ report/
+*.tar.gz
