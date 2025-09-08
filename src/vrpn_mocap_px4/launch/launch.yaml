@@ -1,0 +1,20 @@
+launch:
+
+- arg:
+    name: "source"
+    default: "/vrpn/hummingbird/pose"
+- arg:
+    name: "sink"
+    default: "/fmu/in/vehicle_visual_odometry"
+
+- node:
+    pkg: "vrpn_mocap_px4"
+    exec: "relay_pose"
+    output: "screen"
+    param:
+    -
+      name: "source"
+      value: "$(var source)"
+    -
+      name: "sink"
+      value: "$(var sink)"

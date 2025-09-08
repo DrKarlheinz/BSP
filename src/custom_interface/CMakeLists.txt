@@ -28,6 +28,8 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Gy87.msg"
   "msg/Servo.msg"
+  "msg/VehicleLocalPosition.msg"
+  "msg/VehicleOdometry.msg"
 )
 
 
