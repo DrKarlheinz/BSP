@@ -5,7 +5,7 @@ accessories/
 .vscode/
 reqs.txt
 accessories/sysfspwm/
-vrpn_mocap_px4/
+backup-mocap/
 accessories/
 Final\ report/
 *.tar.gz
