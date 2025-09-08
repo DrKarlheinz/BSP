@@ -1,5 +1,14 @@
 
 
+
+frame: albatross
+
+ros2 launch vrpn_mocap client.launch.yaml server:=192.168.30.105 port:=3883
+ros2 launch vrpn_mocap_px4 launch.yaml source:=/vrpn_mocap/albatross/pose sink:=/fmu/in/vehicle_visual_odometry
+
+==========================================
+
+
 make px4_sitl gazebo-classic
 
 ------------------------------------------
@@ -55,7 +64,7 @@ rosdep install -i --from-path src --rosdistro foxy -y
 ssh pi@192.168.30.37
 MicroXRCEAgent serial --dev /dev/ttyUSB0 -b 921600
 ros2 launch vrpn_mocap client.launch.yaml server:=192.168.30.105 port:=3883
-ros2 launch vrpn_mocap_px4 launch.yaml source:=/vrpn_mocap/hummingbird/pose sink:=/fmu/in/vehicle_visual_odometry
+ros2 launch vrpn_mocap_px4 launch.yaml source:=/vrpn_mocap/albatross/pose sink:=/fmu/in/vehicle_visual_odometry
 
 -----------------------------------------------
 

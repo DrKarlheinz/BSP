@@ -11,7 +11,10 @@ class ServoControllerNode : public rclcpp::Node
 {
 
     rclcpp::Subscription<custom_interface::msg::Servo>::SharedPtr subscription_;
-    int servo_pin_;
+    int aileron_right_ ;
+    int aileron_left_  ;
+    int elevator_      ;
+    int rudder_        ;
     int pi_;
 
     public:
@@ -30,20 +33,32 @@ class ServoControllerNode : public rclcpp::Node
             return;
         }
 
-        servo_pin_ = 17;
-        aileron_left_  = ;
-        aileron_right_ = ;
-        elevator_      = ;
-        rudder_        = ;
-        set_mode(pi_, servo_pin_, PI_OUTPUT);
-        set_PWM_frequency(pi_, servo_pin_, 50); // 50Hz
+        aileron_right_ = 17;
+        aileron_left_  = 27;
+        elevator_      = 22;
+        rudder_        = 23;
+
+        set_mode(pi_, aileron_right_, PI_OUTPUT);
+        set_PWM_frequency(pi_, aileron_right_, 50);
+
+        set_mode(pi_, aileron_left_, PI_OUTPUT);
+        set_PWM_frequency(pi_, aileron_left_, 50); 
+
+        set_mode(pi_, elevator_, PI_OUTPUT);
+        set_PWM_frequency(pi_, elevator_, 50); 
+
+        set_mode(pi_, rudder_, PI_OUTPUT);
+        set_PWM_frequency(pi_, rudder_, 50); 
 
         RCLCPP_INFO(this->get_logger(), "Servo node initialized.");
     }
 
     ~ServoControllerNode()
     {
-        set_servo_pulsewidth(pi_, servo_pin_, 0); // Stop PWM
+        set_servo_pulsewidth(pi_, aileron_right_, 0); // Stop PWM
+        set_servo_pulsewidth(pi_, aileron_left_, 0);
+        set_servo_pulsewidth(pi_, elevator_, 0);
+        set_servo_pulsewidth(pi_, rudder_, 0);
         RCLCPP_INFO(this->get_logger(), "Serv gt shut down why??");
         pigpio_stop(pi_); // Disconnect from pigpiod
     }
@@ -52,10 +67,25 @@ class ServoControllerNode : public rclcpp::Node
     void
     topic_callback(const custom_interface::msg::Servo::SharedPtr data) const
     {
-        int pwm_us = 1000;
-        pwm_us     = data->aileron_right; // Default (center)
-        set_servo_pulsewidth(pi_, servo_pin_, pwm_us);
-        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", pwm_us);
+        int aileron_left_pwm  = 1000.0;
+        int aileron_right_pwm = 1000.0;
+        int elevator_pwm      = 1000.0;
+        int rudder_pwm        = 1000.0;
+
+        aileron_left_pwm  = data->aileron_left;
+        aileron_right_pwm = data->aileron_right;
+        elevator_pwm      = data->elevator;
+        rudder_pwm        = data->rudder;
+
+        set_servo_pulsewidth(pi_, aileron_left_, aileron_left_pwm);
+        set_servo_pulsewidth(pi_, aileron_right_, aileron_right_pwm);
+        set_servo_pulsewidth(pi_, elevator_, elevator_pwm);
+        set_servo_pulsewidth(pi_, rudder_, rudder_pwm);
+        
+        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", aileron_left_pwm);
+        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", aileron_right_pwm);
+        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", elevator_pwm);
+        RCLCPP_INFO(this->get_logger(), "PWM set to %d us", rudder_pwm);
     }
 };
 

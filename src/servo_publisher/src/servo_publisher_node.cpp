@@ -48,10 +48,10 @@ class ServoPulisher : public rclcpp::Node
             direction_ = 1;
         count_ += direction_;
 
-        aileron_left  = 1000.0;
-        aileron_right = 1000.0;
-        elevator      = 1000.0;
-        rudder        = 1002.0;
+        data.aileron_left  = 1000.0;
+        data.aileron_right = 1000.0;
+        data.elevator      = 1000.0;
+        data.rudder        = 1000.0;
         RCLCPP_INFO(
             this->get_logger(),
             "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
