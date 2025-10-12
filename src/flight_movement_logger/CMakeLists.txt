@@ -23,12 +23,13 @@ find_package(std_msgs REQUIRED)
 find_package(custom_interface REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
-add_executable(flight_movement_logger_node)
+add_executable(flight_movement_logger_node src/flight_movement_logger_node.cpp)
 target_include_directories(flight_movement_logger_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
+  flight_movement_logger_node
   rclcpp
   std_msgs
   custom_interface
