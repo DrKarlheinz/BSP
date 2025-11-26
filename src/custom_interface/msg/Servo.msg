@@ -1,4 +1,3 @@
 float32 aileron_left
 float32 aileron_right
 float32 elevator
-float32 rudder

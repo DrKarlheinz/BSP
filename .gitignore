@@ -9,3 +9,9 @@ backup-mocap/
 accessories/
 Final\ report/
 *.tar.gz
+
+*.pdf
+*.zip
+data-extraction/*.csv
+micro-ros/
+.DS_Store

@@ -51,11 +51,10 @@ class ServoPulisher : public rclcpp::Node
         data.aileron_left  = 1000.0;
         data.aileron_right = 1000.0;
         data.elevator      = 1000.0;
-        data.rudder        = 1000.0;
         RCLCPP_INFO(
             this->get_logger(),
             "Publishing:\n ax '%f' \n ay '%f' \n az '%f' \n gx '%f' \n ",
-            data.aileron_left, data.aileron_right, data.elevator, data.rudder);
+            data.aileron_left, data.aileron_right, data.elevator);
         publisher_->publish(data);
     }
     rclcpp::TimerBase::SharedPtr timer_;
