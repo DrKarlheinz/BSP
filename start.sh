@@ -1,19 +1,32 @@
 #!/bin/bash
 
-session="glider"
+SESSION="glider"
+SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
+ROS_WS="glider_ws"
 
-tmux new-session -d -s $session
+if [ -z "$SESSIONEXISTS" ]
+then
+    tmux new-session -d -s $SESSION
 
-tmux rename-window -t 0 'Main'
-tmux send-keys -t 'Main' 'cd glider_ws' C-m '. install/local_setup.bash' C-m
+    tmux rename-window -t $SESSION:0 'Main'
+    tmux send-keys -t $SESSION:0.0 'cd ~/${ROS_WS}' C-m '. install/local_setup.bash' C-m
 
-tmux split-window -h -t $session:0.0 -n 'Servo overview'
-tmux send-keys -t 'Servo overview' 'cd glider_ws' C-m '. install/local_setup.bash' C-m 'ros2 topic echo /servo_publisher' C-m
+    tmux split-window -v -t $SESSION:0.0
+    tmux select-pane -t $SESSION:0.1
+    tmux send-keys -t $SESSION:0.1 'cd ~/${ROS_WS}' C-m '. install/local_setup.bash' C-m 'ros2 topic echo /servo_publisher' C-m
+    tmux select-pane -T "Servo overview"
 
-tmux split-window -v -t $session:0.1 -n 'Servo control topic'
-tmux send-keys -t 'Servo control topic' 'sudo pigpiod' C-m 'cd glider_ws' C-m '. install/local_setup.bash' C-m 'ros2 run servo_controller servo_control_node' C-m
+    tmux split-window -h -t $SESSION:0.1
+    tmux select-pane -t $SESSION:0.2
+    tmux send-keys -t $SESSION:0.2 'sudo pigpiod' C-m 'Drone2024.' C-m 'cd ~/${ROS_WS}' C-m '. install/local_setup.bash' C-m 'ros2 run servo_controller servo_control_node' C-m
+    tmux select-pane -T "Servo control"
 
-tmux resize-pane -t $session:0.1 -x 30%
-tmux resize-pane -t $session:0.2 -x 30%
+    tmux select-layout -t $SESSION:0 main-vertical
 
-tmux select-layout -t $session:0 tiled
+    width=$(($(tmux display -p '#{window_width}') * 35 / 100))
+    tmux resize-pane -t $SESSION:0.1 -x $width
+    tmux resize-pane -t $SESSION:0.2 -x $width
+
+fi
+
+tmux attach -t $SESSION:0.0
